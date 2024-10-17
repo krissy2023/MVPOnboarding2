@@ -1,6 +1,6 @@
 ﻿namespace MVPOnboarding2.Server.DTOs
 {
-    public class StoreDTO
+    public class StoreDto
     {
         public int Id { get; set; }
 

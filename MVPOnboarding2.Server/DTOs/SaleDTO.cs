@@ -2,7 +2,7 @@
 
 namespace MVPOnboarding2.Server.DTOs
 {
-    public class SaleDTO
+    public class SaleDto
     {
         public int Id { get; set; }
 
@@ -14,10 +14,10 @@ namespace MVPOnboarding2.Server.DTOs
 
         public DateTime? DateSold { get; set; }
 
-        public virtual Customer? Customer { get; set; }
+        public string? CustomerName { get; set; }
 
-        public virtual Product? Product { get; set; }
+        public string? ProductName { get; set; }
 
-        public virtual Store? Store { get; set; }
+        public string? StoreName { get; set; }
     }
 }

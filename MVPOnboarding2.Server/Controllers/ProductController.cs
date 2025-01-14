@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using MVPOnboarding2.Server.DTOs;
 using MVPOnboarding2.Server.Mappers;
 using MVPOnboarding2.Server.Models;
+using X.PagedList;
+using X.PagedList.Extensions;
 
 namespace MVPOnboarding2.Server.Controllers
 {
@@ -31,10 +33,29 @@ namespace MVPOnboarding2.Server.Controllers
                
                 return NoContent();
             }
-            
-            
             return Ok(products);
         }
+
+        // GET: api/Product/1/10
+        [HttpGet("{pagenumber}/{pagesize}")]
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProductsWithPagination(int pagenumber = 1, int pagesize = 10)
+        {
+            var products = await _context.Products.Select(p => ProductMapper.EntityToDto(p)).ToListAsync();
+            if (products.Count == 0)
+            {
+
+                return NoContent();
+            }
+
+
+            IPagedList<ProductDto> pagedList = products.ToPagedList(pagenumber, pagesize);
+
+
+
+
+            return Ok(new { pagedList, pagedList.TotalItemCount });
+        }
+
 
         // GET: api/Product/5
         [HttpGet("{id}")]
@@ -88,9 +109,9 @@ namespace MVPOnboarding2.Server.Controllers
         public async Task<ActionResult<ProductDto>> PostProduct(ProductDto product)
         {
             var entity = ProductMapper.DtoToEntity(product);
-            _context.Products.Add(entity);
-            await _context.SaveChangesAsync();
-
+                _context.Products.Add(entity);
+                await _context.SaveChangesAsync();
+            
             return CreatedAtAction("GetProduct", new { id = entity.Id }, ProductMapper.EntityToDto(entity));
         }
 
@@ -105,8 +126,16 @@ namespace MVPOnboarding2.Server.Controllers
             }
 
             _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest("Cannot be deleted. Possible record exist in sale table");
+            }
+            
+            
             return NoContent();
         }
 

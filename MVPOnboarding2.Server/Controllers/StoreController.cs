@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using MVPOnboarding2.Server.DTOs;
 using MVPOnboarding2.Server.Mappers;
 using MVPOnboarding2.Server.Models;
+using X.PagedList;
+using X.PagedList.Extensions;
+
 
 namespace MVPOnboarding2.Server.Controllers
 {
@@ -31,9 +34,28 @@ namespace MVPOnboarding2.Server.Controllers
             {
                 return NoContent();
             }
-            
+
             return Ok(stores);
         }
+
+        // GET: api/Store/1/10
+        [HttpGet("{pagenumber}/{pagesize}")]
+        public async Task<ActionResult<IEnumerable<StoreDto>>> GetStoresWithPagination(int pagenumber = 1, int pagesize = 10)
+        {
+            var stores = await _context.Stores.Select(s => StoreMapper.EntityToDto(s)).ToListAsync();
+            if (stores.Count == 0)
+            {
+                return NoContent();
+            }
+
+            IPagedList<StoreDto> pagedList = stores.ToPagedList(pagenumber, pagesize);
+
+
+
+
+            return Ok(new { pagedList, pagedList.TotalItemCount });
+        }
+
 
         // GET: api/Store/5
         [HttpGet("{id}")]

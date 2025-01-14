@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using MVPOnboarding2.Server.DTOs;
 using MVPOnboarding2.Server.Mappers;
 using MVPOnboarding2.Server.Models;
+using X.PagedList;
+using X.PagedList.Extensions;
 
 namespace MVPOnboarding2.Server.Controllers
 {
@@ -21,19 +23,35 @@ namespace MVPOnboarding2.Server.Controllers
         {
             _context = context;
         }
-
         // GET: api/Customer
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CustomerDto>>> GetCustomers()
         {
-            
+
             var customers =  await _context.Customers.Select(c => CustomerMapper.EntityToDto(c)).ToListAsync();
             if (customers.Count == 0)
             {
                 return NoContent();
             }
             return Ok(customers);
+        }
 
+        // GET: api/Customer/1/10
+
+        [HttpGet("{pagenumber}/{pagesize}")]
+        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetCustomersWithPagination(int pagenumber = 1, int pagesize = 10)
+        {
+
+            var customers = await _context.Customers.Select(c => CustomerMapper.EntityToDto(c)).ToListAsync();
+            if (customers.Count == 0)
+            {
+                return NoContent();
+            }
+
+
+            IPagedList<CustomerDto> pagedList = customers.ToPagedList(pagenumber, pagesize);
+
+            return Ok(new { pagedList, pagedList.TotalItemCount });
         }
 
         // GET: api/Customer/5
@@ -55,7 +73,7 @@ namespace MVPOnboarding2.Server.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCustomer(int id, CustomerDto customer)
         {
-           
+
             if (id != customer.Id)
             {
                 return BadRequest();

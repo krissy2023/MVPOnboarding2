@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using MVPOnboarding2.Server.DTOs;
 using MVPOnboarding2.Server.Mappers;
 using MVPOnboarding2.Server.Models;
+using X.PagedList;
+using X.PagedList.Extensions;
 
 namespace MVPOnboarding2.Server.Controllers
 {
@@ -26,21 +28,58 @@ namespace MVPOnboarding2.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SaleDto>>> GetSales()
         {
-            var sales = await _context.Sales.Select(s => SaleMapper.EntityToDto(s)).ToListAsync();
+           
+            var sales = await _context.Sales
+              .Include(p => p.Product)
+              .Include(c => c.Customer)
+              .Include(s => s.Store)
+              .Select(x => SaleMapper.EntityToDto(x)).ToListAsync();
+
+
             if (sales.Count == 0)
             {
                 return NoContent();
             }
-            
-            
+
             return Ok(sales);
         }
+        // GET: api/Sale/1/10
+        [HttpGet("{pagenumber}/{pagesize}")]
+        public async Task<ActionResult<IEnumerable<SaleDto>>> GetSalesWithPagination(int pagenumber = 1, int pagesize = 10)
+        {
+            //var sales = await _context.Sales.Select(s => SaleMapper.EntityToDto(s)).ToListAsync();
+           
+            var sales = await _context.Sales
+               .Include(p => p.Product)
+               .Include(c => c.Customer)
+               .Include(s => s.Store)
+               .Select(x => SaleMapper.EntityToDto(x)).ToListAsync();
+           
+            if (sales.Count == 0)
+            {
+                return NoContent();
+            }
+
+
+            IPagedList<SaleDto> pagedList = sales.ToPagedList(pagenumber, pagesize);
+
+
+
+
+            return Ok(new { pagedList, pagedList.TotalItemCount });
+        }
+
 
         // GET: api/Sale/5
         [HttpGet("{id}")]
         public async Task<ActionResult<SaleDto>> GetSale(int id)
         {
-            var sale = await _context.Sales.FindAsync(id);
+            var sale = await _context.Sales
+                 .Include(p => p.Product)
+                 .Include(c => c.Customer)
+                 .Include(s => s.Store)
+                 .FirstOrDefaultAsync(x => x.Id == id);
+
 
             if (sale == null)
             {
@@ -91,7 +130,16 @@ namespace MVPOnboarding2.Server.Controllers
             _context.Sales.Add(entity);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSale", new { id = entity.Id }, SaleMapper.EntityToDto(entity));
+            var saleDetails = await _context.Sales
+                .Include(p => p.Product)
+                .Include(c => c.Customer)
+                .Include(s => s.Store)
+                .SingleAsync(x => x.Id == entity.Id);
+
+
+            return CreatedAtAction("GetSale", new { id = sale.Id }, SaleMapper.EntityToDto(saleDetails));
+
+           
         }
 
         // DELETE: api/Sale/5

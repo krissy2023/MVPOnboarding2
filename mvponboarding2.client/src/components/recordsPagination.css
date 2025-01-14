@@ -1,0 +1,26 @@
+.pagination {
+  display: flex;
+  margin-right: 20px;
+  margin-left: 10px;
+}
+
+.pagination div:last-child {
+  margin-left: auto;
+  background-color: #2185d0;
+}
+
+.ui.pagination.menu .active.item {
+  color: #ffff;
+}
+
+.ui.pagination.menu .item {
+  color: #ffff;
+}
+
+.ui.menu .item:before {
+  color: #ffff;
+}
+
+.ui.menu .item:after {
+  color: #ffff;
+}

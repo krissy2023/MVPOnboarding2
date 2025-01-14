@@ -12,12 +12,15 @@ namespace MVPOnboarding2.Server.DTOs
 
         public int? StoreId { get; set; }
 
-        public DateTime? DateSold { get; set; }
+        public DateTime? DateSold { get; set; } 
 
         public string? CustomerName { get; set; }
 
         public string? ProductName { get; set; }
 
         public string? StoreName { get; set; }
+
+        public string? FormattedDate { get; set; }
+
     }
 }

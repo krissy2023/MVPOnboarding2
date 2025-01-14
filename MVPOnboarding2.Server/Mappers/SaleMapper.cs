@@ -29,10 +29,11 @@ namespace MVPOnboarding2.Server.Mappers
                 StoreId = sale.StoreId,
                 ProductId = sale.ProductId,
                 DateSold = sale.DateSold,
+                FormattedDate = sale.DateSold?.ToString("d"),
                 CustomerName = sale.Customer?.Name,
                 StoreName = sale.Store?.Name,
                 ProductName = sale.Product?.Name,
-            };
+            }; 
             return dto;
         }
     }

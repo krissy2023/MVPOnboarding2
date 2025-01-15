@@ -29,7 +29,7 @@ namespace MVPOnboarding2.Server.Mappers
                 StoreId = sale.StoreId,
                 ProductId = sale.ProductId,
                 DateSold = sale.DateSold,
-                FormattedDate = sale.DateSold?.ToString("d"),
+                FormattedDate = sale.DateSold?.ToString("yyyy-MM-dd"),
                 CustomerName = sale.Customer?.Name,
                 StoreName = sale.Store?.Name,
                 ProductName = sale.Product?.Name,

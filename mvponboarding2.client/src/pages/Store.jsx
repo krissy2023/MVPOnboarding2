@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import { Button, Loader } from "semantic-ui-react";
+import { useState, useEffect } from "react";
 import API_SERVICE from "../services/apis/ApiService";
 import API_ENDPOINTS from "../services/apiEndpoints";
 import RecordsTable from "../components/RecordsTable.jsx";
@@ -22,7 +22,7 @@ function Store() {
   const [pagesize, setPageSize] = useState(10);
   const [pagenumber, setPageNumber] = useState(1);
   const [isInputError, setIsInputError] = useState(false);
-  const [inputErrorContent, setInputErrorContent] = useState([]);
+  const [inputErrorContent, setInputErrorContent] = useState("");
   const [isDeleteError, setIsDeleteError] = useState(false);
 
   const recordType = "Store";
@@ -103,7 +103,6 @@ function Store() {
     if (!data.name) {
       inputErrorList.push("name required");
       setIsInputError(true);
-      console.log(inputErrorList);
       setInputErrorContent(inputErrorList);
       return;
     }

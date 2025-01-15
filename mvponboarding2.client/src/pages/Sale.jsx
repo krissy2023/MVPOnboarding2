@@ -65,7 +65,6 @@ function Sale() {
   const handleOpenCreateModal = (e) => {
     setIsModalOpen(true);
     setModalActionType(e.target.name);
-    setRecord("");
   };
 
   //connected to button inside the records table component
@@ -88,6 +87,7 @@ function Sale() {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setRecord("");
     setIsInputError(false);
   };
 
@@ -95,6 +95,8 @@ function Sale() {
 
   const handleCloseDeleteModal = () => {
     setIsDeleteModalOpen(false);
+    setRecord("");
+    setIsDeleteError(false);
   };
 
   //create or update record from the form inside the CreateUpdateRecordModal
@@ -102,27 +104,23 @@ function Sale() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-
     let data = Object.fromEntries(formData);
-
     let inputErrorList = [];
-
     if (!data.dateSold) {
       inputErrorList.push("Date required");
     }
-    if (!data.customerName) {
+    if (!data.customerId) {
       inputErrorList.push("Customer required");
     }
-    if (!data.productName) {
+    if (!data.productId) {
       inputErrorList.push("Product required");
     }
-    if (!data.storeName) {
+    if (!data.storeId) {
       inputErrorList.push("Store required");
     }
 
     if (inputErrorList.length > 0) {
       setIsInputError(true);
-      console.log(inputErrorList);
       setInputErrorContent(inputErrorList);
       return;
     }
@@ -162,7 +160,6 @@ function Sale() {
       }
       return;
     }
-
     fetchData();
     setIsDeleteModalOpen(false);
   };

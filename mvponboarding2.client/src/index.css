@@ -1,3 +1,8 @@
 button.ui.blue.button.create-btn {
   margin-left: 10px;
 }
+
+.no-records {
+  margin-top: 50px;
+  margin-left: 10px;
+}

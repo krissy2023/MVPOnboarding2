@@ -10,7 +10,6 @@ import Product from "./pages/Product";
 import Store from "./pages/Store";
 import Sale from "./pages/Sale";
 import Layout from "./Layout";
-import "./App.css";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

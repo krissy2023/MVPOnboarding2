@@ -73,7 +73,7 @@ function Sale() {
     setIsModalOpen(true);
     setModalActionType(e.target.name);
     setId(e.target.value);
-    const data = response.find((d) => d.id == e.target.value);
+    const data = response?.find((d) => d.id == e.target.value);
     setRecord(data);
   };
 
@@ -109,16 +109,15 @@ function Sale() {
     if (!data.dateSold) {
       inputErrorList.push("Date required");
     }
-    if (!data.customerId) {
+    if (!data.customerId.trim()) {
       inputErrorList.push("Customer required");
     }
-    if (!data.productId) {
+    if (!data.productId.trim()) {
       inputErrorList.push("Product required");
     }
-    if (!data.storeId) {
+    if (!data.storeId.trim()) {
       inputErrorList.push("Store required");
     }
-
     if (inputErrorList.length > 0) {
       setIsInputError(true);
       setInputErrorContent(inputErrorList);
@@ -174,8 +173,21 @@ function Sale() {
 
   return (
     <div>
+      {!error && (
+        <Button
+          className="create-btn"
+          color="blue"
+          onClick={handleOpenCreateModal}
+          name="Create"
+        >
+          {" "}
+          New {recordType}
+        </Button>
+      )}
       {error && <ErrorPage errMessage={error} />}
-      {!response && !error && <p>No records </p>}
+      {!response && !error && (
+        <p className="no-records">No records to show. </p>
+      )}
       {isLoading && (
         <Loader active inline="centered">
           Loading
@@ -183,15 +195,6 @@ function Sale() {
       )}
       {!isLoading && !error && response && (
         <div>
-          <Button
-            className="create-btn"
-            color="blue"
-            onClick={handleOpenCreateModal}
-            name="Create"
-          >
-            {" "}
-            New {recordType}
-          </Button>
           <RecordsTable
             data={response}
             headerList={headers}

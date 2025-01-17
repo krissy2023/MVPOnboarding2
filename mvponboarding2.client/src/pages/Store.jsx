@@ -100,8 +100,13 @@ function Store() {
     const formData = new FormData(e.currentTarget);
     let data = Object.fromEntries(formData);
     let inputErrorList = [];
-    if (!data.name) {
+    if (!data.name.trim()) {
       inputErrorList.push("name required");
+    }
+    if (!data.address.trim()) {
+      inputErrorList.push("address required");
+    }
+    if (inputErrorList.length > 0) {
       setIsInputError(true);
       setInputErrorContent(inputErrorList);
       return;
@@ -156,8 +161,21 @@ function Store() {
 
   return (
     <div>
+      {!error && (
+        <Button
+          className="create-btn"
+          color="blue"
+          onClick={handleOpenCreateModal}
+          name="Create"
+        >
+          {" "}
+          New {recordType}
+        </Button>
+      )}
       {error && <ErrorPage errMessage={error} />}
-      {!response && !error && <p>No records </p>}
+      {!response && !error && (
+        <p className="no-records">No records to show. </p>
+      )}
       {isLoading && (
         <Loader active inline="centered">
           Loading
@@ -165,15 +183,6 @@ function Store() {
       )}
       {!isLoading && !error && response && (
         <div>
-          <Button
-            className="create-btn"
-            color="blue"
-            onClick={handleOpenCreateModal}
-            name="Create"
-          >
-            {" "}
-            New {recordType}
-          </Button>
           <RecordsTable
             data={response}
             headerList={headers}

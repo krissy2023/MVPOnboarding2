@@ -30,7 +30,8 @@ function SaleCreateUpdateRecordModal({
   const [storeList, setStoreList] = useState([]);
   const [error, setError] = useState(false);
 
-  const newList = inputErrorContent != null && Object.values(inputErrorContent);
+  const errorList =
+    inputErrorContent != null && Object.values(inputErrorContent);
   const customerUrl = API_ENDPOINTS.CUSTOMER;
   const storeUrl = API_ENDPOINTS.STORE;
   const productUrl = API_ENDPOINTS.PRODUCT;
@@ -80,15 +81,16 @@ function SaleCreateUpdateRecordModal({
       <option value={record?.customerId ? record.customerId : " "} selected>
         {record?.customerName ? record.customerName : " "}
       </option>
-      {customerList
-        .filter((c) => c.id != record?.customerId)
-        .map((c) => {
-          return (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          );
-        })}
+      {customerList &&
+        customerList
+          .filter((c) => c.id != record?.customerId)
+          .map((c) => {
+            return (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            );
+          })}
     </select>
   );
 
@@ -97,15 +99,16 @@ function SaleCreateUpdateRecordModal({
       <option value={record?.productId ? record.productId : " "} selected>
         {record?.productName ? record.productName : " "}
       </option>
-      {productList
-        .filter((p) => p.id != record?.productId)
-        .map((p) => {
-          return (
-            <option key={p.id} value={p.id}>
-              {p.name}
-            </option>
-          );
-        })}
+      {productList &&
+        productList
+          .filter((p) => p.id != record?.productId)
+          .map((p) => {
+            return (
+              <option key={p.id} value={p.id}>
+                {p.name}
+              </option>
+            );
+          })}
     </select>
   );
 
@@ -114,15 +117,16 @@ function SaleCreateUpdateRecordModal({
       <option value={record?.storeId ? record.storeId : " "} selected>
         {record?.storeName ? record.storeName : " "}
       </option>
-      {storeList
-        .filter((s) => s.id != record?.storeId)
-        .map((s) => {
-          return (
-            <option key={s.id} value={s.id}>
-              {s.name}
-            </option>
-          );
-        })}
+      {storeList &&
+        storeList
+          .filter((s) => s.id != record?.storeId)
+          .map((s) => {
+            return (
+              <option key={s.id} value={s.id}>
+                {s.name}
+              </option>
+            );
+          })}
     </select>
   );
 
@@ -145,7 +149,7 @@ function SaleCreateUpdateRecordModal({
                 <label>Store</label>
                 {storeSelect}
               </FormField>
-              <Message negative hidden={!isInputError} list={newList} />
+              <Message negative hidden={!isInputError} list={errorList} />
             </Form>
           )}
         </ModalDescription>

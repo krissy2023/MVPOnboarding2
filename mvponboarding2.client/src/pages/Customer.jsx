@@ -99,8 +99,9 @@ function Customer() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     let data = Object.fromEntries(formData);
+    console.log(data);
     let inputErrorList = [];
-    if (!data.name) {
+    if (!data.name.trim()) {
       inputErrorList.push("name required");
       setIsInputError(true);
       setInputErrorContent(inputErrorList);
@@ -156,32 +157,34 @@ function Customer() {
 
   return (
     <div>
+      {!error && (
+        <Button
+          className="create-btn"
+          color="blue"
+          onClick={handleOpenCreateModal}
+          name="Create"
+        >
+          {" "}
+          New {recordType}
+        </Button>
+      )}
       {error && <ErrorPage errMessage={error} />}
-      {!response && !error && <p>No records </p>}
+      {!response && !error && (
+        <p className="no-records">No records to show. </p>
+      )}
       {isLoading && (
         <Loader active inline="centered">
           Loading
         </Loader>
       )}
       {!isLoading && !error && response && (
-        <div>
-          <Button
-            className="create-btn"
-            color="blue"
-            onClick={handleOpenCreateModal}
-            name="Create"
-          >
-            {" "}
-            New {recordType}
-          </Button>
-          <RecordsTable
-            data={response}
-            headerList={headers}
-            columnList={columns}
-            handleOpenUpdateModal={handleOpenUpdateModal}
-            handleOpenDeleteModal={handleOpenDeleteModal}
-          />
-        </div>
+        <RecordsTable
+          data={response}
+          headerList={headers}
+          columnList={columns}
+          handleOpenUpdateModal={handleOpenUpdateModal}
+          handleOpenDeleteModal={handleOpenDeleteModal}
+        />
       )}
 
       <CreateUpdateRecordModal

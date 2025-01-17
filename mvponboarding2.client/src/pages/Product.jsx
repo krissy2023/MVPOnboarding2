@@ -103,10 +103,10 @@ function Product() {
     if (isNaN(data.price)) {
       inputErrorList.push("Invalid price");
     }
-    if (!data.price) {
+    if (!data.price.trim()) {
       inputErrorList.push("price required");
     }
-    if (!data.name) {
+    if (!data.name.trim()) {
       inputErrorList.push("name required");
     }
     if (inputErrorList.length > 0) {
@@ -164,32 +164,34 @@ function Product() {
 
   return (
     <div>
+      {!error && (
+        <Button
+          className="create-btn"
+          color="blue"
+          onClick={handleOpenCreateModal}
+          name="Create"
+        >
+          {" "}
+          New {recordType}
+        </Button>
+      )}
       {error && <ErrorPage errMessage={error} />}
-      {!response && !error && <p>No records </p>}
+      {!response && !error && (
+        <p className="no-records">No records to show. </p>
+      )}
       {isLoading && (
         <Loader active inline="centered">
           Loading
         </Loader>
       )}
       {!isLoading && !error && response && (
-        <div>
-          <Button
-            className="create-btn"
-            color="blue"
-            onClick={handleOpenCreateModal}
-            name="Create"
-          >
-            {" "}
-            New {recordType}
-          </Button>
-          <RecordsTable
-            data={response}
-            headerList={headers}
-            columnList={columns}
-            handleOpenUpdateModal={handleOpenUpdateModal}
-            handleOpenDeleteModal={handleOpenDeleteModal}
-          />
-        </div>
+        <RecordsTable
+          data={response}
+          headerList={headers}
+          columnList={columns}
+          handleOpenUpdateModal={handleOpenUpdateModal}
+          handleOpenDeleteModal={handleOpenDeleteModal}
+        />
       )}
 
       <CreateUpdateRecordModal

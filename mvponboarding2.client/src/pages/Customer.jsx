@@ -99,7 +99,6 @@ function Customer() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     let data = Object.fromEntries(formData);
-    console.log(data);
     let inputErrorList = [];
     if (!data.name.trim()) {
       inputErrorList.push("name required");

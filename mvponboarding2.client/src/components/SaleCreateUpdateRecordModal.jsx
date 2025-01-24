@@ -45,7 +45,9 @@ function SaleCreateUpdateRecordModal({
   const getAllCustomers = async () => {
     try {
       const result = await axios.get(customerUrl);
-      setCustomerList(result.data);
+      if (result?.data && result?.data.length) {
+        setCustomerList(result.data);
+      }
     } catch (err) {
       if (err) setError(true);
     }
@@ -54,7 +56,9 @@ function SaleCreateUpdateRecordModal({
   const getAllProducts = async () => {
     try {
       const result = await axios.get(productUrl);
-      setProductList(result.data);
+      if (result?.data && result?.data.length) {
+        setProductList(result.data);
+      }
     } catch (err) {
       if (err) setError(true);
     }
@@ -63,7 +67,9 @@ function SaleCreateUpdateRecordModal({
   const getAllStores = async () => {
     try {
       const result = await axios.get(storeUrl);
-      setStoreList(result.data);
+      if (result?.data && result?.data.length) {
+        setStoreList(result.data);
+      }
     } catch (err) {
       if (err) setError(true);
     }

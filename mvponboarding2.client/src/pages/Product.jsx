@@ -120,7 +120,7 @@ function Product() {
           await API_SERVICE.postRecord(url, data);
         } catch (err) {
           if (err) {
-            setError("Link to the page not found");
+            setError(err.message);
           }
         }
         break;
@@ -129,7 +129,7 @@ function Product() {
           await API_SERVICE.updateRecord(url, id, { id: id, ...data });
         } catch (err) {
           if (err) {
-            setError("Link to the page not found");
+            setError(err.message);
           }
         }
         break;

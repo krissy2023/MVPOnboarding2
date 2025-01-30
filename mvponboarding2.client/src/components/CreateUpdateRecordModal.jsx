@@ -35,8 +35,6 @@ function CreateUpdateRecordModal({
           defaultValue={record?.[r.toLowerCase()]}
           error={isInputError}
         />
-            );
-       
       </FormField>
     );
   });

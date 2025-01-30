@@ -64,12 +64,8 @@ public partial class OnboardingTaskContext : DbContext
         {
             entity.ToTable("Store");
 
-            entity.Property(e => e.Address)
-                .HasMaxLength(10)
-                .IsFixedLength();
-            entity.Property(e => e.Name)
-                .HasMaxLength(10)
-                .IsFixedLength();
+            entity.Property(e => e.Address).HasMaxLength(50);
+            entity.Property(e => e.Name).HasMaxLength(50);
         });
 
         OnModelCreatingPartial(modelBuilder);

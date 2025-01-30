@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using MVPOnboarding2.Server.Models;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+var url = "mvponboarding2.azurewebsites.net";
+//var url = "https://localhost:5173";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,7 +13,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<OnboardingTaskContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("DefaultConnection")));
+    builder.Configuration.GetConnectionString("ProdConnection")));
+
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy(name: MyAllowSpecificOrigins,
+					  policy =>
+					  {
+						  policy.WithOrigins(url
+											  ).AllowAnyHeader()
+											   .AllowAnyMethod();
+					  });
+});
 
 var app = builder.Build();
 
@@ -25,6 +39,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 

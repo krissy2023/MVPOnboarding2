@@ -23,6 +23,8 @@ namespace MVPOnboarding2.Server.Mappers
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,
+                FormattedPrice = product.Price?.ToString("C") ?? null
+
             };
             return dto;
         }

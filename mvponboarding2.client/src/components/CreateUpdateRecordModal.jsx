@@ -15,7 +15,7 @@ import PropTypes from "prop-types";
 function CreateUpdateRecordModal({
   modalActionType,
   record,
-  formFields,
+  inputFields,
   recordType,
   handleFormSubmit,
   handleCloseModal,
@@ -26,7 +26,7 @@ function CreateUpdateRecordModal({
   const newErrorList =
     inputErrorContent != null && Object.values(inputErrorContent);
 
-  const formField = formFields.map((r) => {
+  const formField = inputFields.map((r) => {
     return (
       <FormField key={r}>
         <label>{r}</label>
@@ -73,7 +73,7 @@ export default CreateUpdateRecordModal;
 CreateUpdateRecordModal.propTypes = {
   recordType: PropTypes.string,
   handleFormSubmit: PropTypes.func,
-  formFields: PropTypes.array,
+  inputFields: PropTypes.array,
   isModalOpen: PropTypes.bool,
   modalActionType: PropTypes.string,
   record: PropTypes.object,

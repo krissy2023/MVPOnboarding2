@@ -24,6 +24,7 @@ function Product() {
   const [isInputError, setIsInputError] = useState(false);
   const [inputErrorContent, setInputErrorContent] = useState([]);
   const [isDeleteError, setIsDeleteError] = useState(false);
+  const [deleteErrorMessage, setDeleteErrorMessage] = useState("");
 
   const recordType = "Product";
   const headers = ["Name", "Price", "Actions", "Actions"];
@@ -98,6 +99,7 @@ function Product() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     let data = Object.fromEntries(formData);
+    data.price = data?.price?.replace("$", "");
     let inputErrorList = [];
     if (isNaN(data.price)) {
       inputErrorList.push("Invalid price");
@@ -146,6 +148,7 @@ function Product() {
     } catch (err) {
       if (err) {
         setIsDeleteError(true);
+        setDeleteErrorMessage(err.message);
       }
       return;
     }
@@ -210,6 +213,7 @@ function Product() {
         isDeleteModalOpen={isDeleteModalOpen}
         recordType={recordType}
         isDeleteError={isDeleteError}
+        deleteErrorMessage={deleteErrorMessage}
       />
 
       {response && (

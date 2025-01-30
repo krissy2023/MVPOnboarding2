@@ -24,6 +24,7 @@ function Sale() {
   const [isInputError, setIsInputError] = useState(false);
   const [inputErrorContent, setInputErrorContent] = useState("");
   const [isDeleteError, setIsDeleteError] = useState(false);
+  const [deleteErrorMessage, setDeleteErrorMessage] = useState("");
 
   const recordType = "Sale";
   const headers = [
@@ -156,6 +157,7 @@ function Sale() {
     } catch (err) {
       if (err) {
         setIsDeleteError(true);
+        setDeleteErrorMessage(err.message);
       }
       return;
     }
@@ -222,6 +224,7 @@ function Sale() {
         isDeleteModalOpen={isDeleteModalOpen}
         recordType={recordType}
         isDeleteError={isDeleteError}
+        deleteErrorMessage={deleteErrorMessage}
       />
 
       {response && (

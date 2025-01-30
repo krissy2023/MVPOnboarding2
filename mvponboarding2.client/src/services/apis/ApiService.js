@@ -30,7 +30,11 @@ const API_SERVICE = {
     try {
       await axios.delete(url);
     } catch (err) {
-      if (err) throw new Error("Link to the page not found.");
+      if (err.status == 400) {
+        throw new Error(err.response.data);
+      } else {
+        throw new Error("Failed to delete record.");
+      }
     }
   },
 };

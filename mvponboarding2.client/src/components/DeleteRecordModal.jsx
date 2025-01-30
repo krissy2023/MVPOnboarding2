@@ -16,6 +16,7 @@ function DeleteRecordModal({
   handleCloseDeleteModal,
   handleDeleteRecord,
   isDeleteError,
+  deleteErrorMessage,
 }) {
   return (
     <Modal open={isDeleteModalOpen}>
@@ -25,7 +26,7 @@ function DeleteRecordModal({
           {isDeleteError ? (
             <Message negative>
               <MessageHeader>Error Occured!</MessageHeader>
-              <p>Failed to delete record.</p>
+              <p>{deleteErrorMessage}</p>
             </Message>
           ) : (
             <p> Are you sure? </p>
@@ -57,4 +58,5 @@ DeleteRecordModal.propTypes = {
   handleCloseDeleteModal: PropTypes.func,
   handleDeleteRecord: PropTypes.func,
   isDeleteError: PropTypes.bool,
+  deleteErrorMessage: PropTypes.string,
 };

@@ -24,7 +24,7 @@ function Store() {
   const [isInputError, setIsInputError] = useState(false);
   const [inputErrorContent, setInputErrorContent] = useState("");
   const [isDeleteError, setIsDeleteError] = useState(false);
-
+  const [deleteErrorMessage, setDeleteErrorMessage] = useState("");
   const recordType = "Store";
   const headers = ["Name", "Address", "Actions", "Actions"];
   const columns = ["name", "address"];
@@ -144,6 +144,7 @@ function Store() {
     } catch (err) {
       if (err) {
         setIsDeleteError(true);
+        setDeleteErrorMessage(err.message);
       }
       return;
     }
@@ -211,6 +212,7 @@ function Store() {
         isDeleteModalOpen={isDeleteModalOpen}
         recordType={recordType}
         isDeleteError={isDeleteError}
+        deleteErrorMessage={deleteErrorMessage}
       />
 
       {response && (

@@ -24,6 +24,7 @@ function Customer() {
   const [isInputError, setIsInputError] = useState(false);
   const [inputErrorContent, setInputErrorContent] = useState("");
   const [isDeleteError, setIsDeleteError] = useState(false);
+  const [deleteErrorMessage, setDeleteErrorMessage] = useState("");
 
   const recordType = "Customer";
   const headers = ["Name", "Address", "Actions", "Actions"];
@@ -137,9 +138,8 @@ function Customer() {
     try {
       await API_SERVICE.deleteRecord(url, id);
     } catch (err) {
-      if (err) {
-        setIsDeleteError(true);
-      }
+      setIsDeleteError(true);
+      setDeleteErrorMessage(err.message);
       return;
     }
     fetchData();
@@ -204,6 +204,7 @@ function Customer() {
         isDeleteModalOpen={isDeleteModalOpen}
         recordType={recordType}
         isDeleteError={isDeleteError}
+        deleteErrorMessage={deleteErrorMessage}
       />
 
       {response && (

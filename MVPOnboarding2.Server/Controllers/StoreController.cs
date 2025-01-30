@@ -153,7 +153,7 @@ namespace MVPOnboarding2.Server.Controllers
 			}
 			catch (DbUpdateException)
 			{
-				return BadRequest("Cannot be deleted. Possible record exist in store table");
+				return BadRequest("Failed to delete record. Possible record exist in sale.");
 			}
 		}
 

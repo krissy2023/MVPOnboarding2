@@ -197,8 +197,8 @@ function Sale() {
         <div>
           <RecordsTable
             data={response}
-            headerList={headers}
-            columnList={columns}
+            headers={headers}
+            columns={columns}
             handleOpenUpdateModal={handleOpenUpdateModal}
             handleOpenDeleteModal={handleOpenDeleteModal}
           />

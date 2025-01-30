@@ -12,10 +12,9 @@ import {
 } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-function CreateUpdateRecordModal({
+function ProductCreateUpdateRecordModal({
   modalActionType,
   record,
-  formFields,
   recordType,
   handleFormSubmit,
   handleCloseModal,
@@ -26,31 +25,29 @@ function CreateUpdateRecordModal({
   const newErrorList =
     inputErrorContent != null && Object.values(inputErrorContent);
 
-  const formField = formFields.map((r) => {
-    return (
-      <FormField key={r}>
-        <label>{r}</label>
+  const formfield = (
+    <Form id="modalform" onSubmit={handleFormSubmit}>
+      <FormField>
+        <label>Name</label>
+        <Input name="name" defaultValue={record?.name} error={isInputError} />
+      </FormField>
+      <FormField>
+        <label>Price</label>
         <Input
-          name={r.toLowerCase()}
-          defaultValue={record?.[r.toLowerCase()]}
+          name="price"
+          defaultValue={record?.formattedPrice}
           error={isInputError}
         />
-            );
-       
       </FormField>
-    );
-  });
+      <Message negative hidden={!isInputError} list={newErrorList} />
+    </Form>
+  );
 
   return (
     <Modal open={isModalOpen}>
       <ModalHeader>{`${modalActionType} ${recordType}`}</ModalHeader>
       <ModalContent>
-        <ModalDescription>
-          <Form id="modalform" onSubmit={handleFormSubmit}>
-            {formField}
-            <Message negative hidden={!isInputError} list={newErrorList} />
-          </Form>
-        </ModalDescription>
+        <ModalDescription>{formfield}</ModalDescription>
       </ModalContent>
       <ModalActions>
         <Button color="black" onClick={handleCloseModal}>
@@ -70,12 +67,11 @@ function CreateUpdateRecordModal({
   );
 }
 
-export default CreateUpdateRecordModal;
+export default ProductCreateUpdateRecordModal;
 
-CreateUpdateRecordModal.propTypes = {
+ProductCreateUpdateRecordModal.propTypes = {
   recordType: PropTypes.string,
   handleFormSubmit: PropTypes.func,
-  formFields: PropTypes.array,
   isModalOpen: PropTypes.bool,
   modalActionType: PropTypes.string,
   record: PropTypes.object,

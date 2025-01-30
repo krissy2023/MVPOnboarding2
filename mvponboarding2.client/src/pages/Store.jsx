@@ -28,7 +28,7 @@ function Store() {
   const recordType = "Store";
   const headers = ["Name", "Address", "Actions", "Actions"];
   const columns = ["name", "address"];
-  const formFields = ["Name", "Address"];
+  const inputFields = ["Name", "Address"];
   const pageSize = pagesize;
   const pageNumber = pagenumber;
   const totalPages = totalDataCount / pageSize;
@@ -185,8 +185,8 @@ function Store() {
         <div>
           <RecordsTable
             data={response}
-            headerList={headers}
-            columnList={columns}
+            headers={headers}
+            columns={columns}
             handleOpenUpdateModal={handleOpenUpdateModal}
             handleOpenDeleteModal={handleOpenDeleteModal}
           />
@@ -194,7 +194,7 @@ function Store() {
       )}
 
       <CreateUpdateRecordModal
-        formFields={formFields}
+        inputFields={inputFields}
         isModalOpen={isModalOpen}
         handleCloseModal={handleCloseModal}
         handleFormSubmit={handleFormSubmit}

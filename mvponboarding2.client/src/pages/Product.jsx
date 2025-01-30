@@ -3,7 +3,7 @@ import { Button, Loader } from "semantic-ui-react";
 import API_SERVICE from "../services/apis/ApiService";
 import API_ENDPOINTS from "../services/apiEndpoints";
 import RecordsTable from "../components/RecordsTable.jsx";
-import CreateUpdateRecordModal from "../components/CreateUpdateRecordModal.jsx";
+import ProductCreateUpdateRecordModal from "../components/ProductCreateUpdateRecordModal.jsx";
 import DeleteRecordModal from "../components/DeleteRecordModal.jsx";
 import RecordsPagination from "../components/RecordsPagination.jsx";
 import axios from "axios";
@@ -28,7 +28,6 @@ function Product() {
   const recordType = "Product";
   const headers = ["Name", "Price", "Actions", "Actions"];
   const columns = ["name", "formattedPrice"];
-  const formFields = ["Name", "Price"];
   const pageSize = pagesize;
   const pageNumber = pagenumber;
   const totalPages = totalDataCount / pageSize;
@@ -103,11 +102,11 @@ function Product() {
     if (isNaN(data.price)) {
       inputErrorList.push("Invalid price");
     }
-    if (!data.price.trim()) {
-      inputErrorList.push("price required");
-    }
     if (!data.name.trim()) {
       inputErrorList.push("name required");
+    }
+    if (!data.price.trim()) {
+      inputErrorList.push("price required");
     }
     if (inputErrorList.length > 0) {
       setIsInputError(true);
@@ -187,15 +186,14 @@ function Product() {
       {!isLoading && !error && response && (
         <RecordsTable
           data={response}
-          headerList={headers}
-          columnList={columns}
+          headers={headers}
+          columns={columns}
           handleOpenUpdateModal={handleOpenUpdateModal}
           handleOpenDeleteModal={handleOpenDeleteModal}
         />
       )}
 
-      <CreateUpdateRecordModal
-        formFields={formFields}
+      <ProductCreateUpdateRecordModal
         isModalOpen={isModalOpen}
         handleCloseModal={handleCloseModal}
         handleFormSubmit={handleFormSubmit}

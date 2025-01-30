@@ -12,13 +12,13 @@ import "./recordsTable.css";
 
 function RecordsTable({
   data,
-  headerList,
-  columnList,
+  headers,
+  columns,
   handleOpenUpdateModal,
   handleOpenDeleteModal,
 }) {
   //headers for the table
-  const headers = headerList.map((header, index) => (
+  const tableHeaders = headers.map((header, index) => (
     <TableHeaderCell key={index}>{header}</TableHeaderCell>
   ));
 
@@ -27,7 +27,7 @@ function RecordsTable({
   const recordRow = data.map((record) => {
     return (
       <TableRow key={record.id}>
-        {columnList.map((column) => {
+        {columns.map((column) => {
           return <TableCell key={column}> {record[`${column}`]}</TableCell>;
         })}
 
@@ -59,7 +59,7 @@ function RecordsTable({
     <div className="records-table">
       <Table celled>
         <TableHeader>
-          <TableRow>{headers}</TableRow>
+          <TableRow>{tableHeaders}</TableRow>
         </TableHeader>
         <TableBody>{recordRow}</TableBody>
       </Table>
@@ -71,9 +71,9 @@ export default RecordsTable;
 
 RecordsTable.propTypes = {
   RecordRow: PropTypes.func,
-  headerList: PropTypes.array,
+  headers: PropTypes.array,
   data: PropTypes.array,
-  columnList: PropTypes.array,
+  columns: PropTypes.array,
   handleOpenUpdateModal: PropTypes.func,
   handleOpenDeleteModal: PropTypes.func,
   recordType: PropTypes.string,

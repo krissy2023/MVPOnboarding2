@@ -79,7 +79,11 @@ function SaleCreateUpdateRecordModal({
     modalActionType == "Create" ? (
       <Input name="dateSold" type="date"></Input>
     ) : (
-      <Input readonly name="dateSold" value={record?.formattedDate}></Input>
+      <Input
+        type="date"
+        name="dateSold"
+        defaultValue={record?.formattedDate}
+      ></Input>
     );
 
   const customerSelect = (
